@@ -43,26 +43,35 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 106, 255),
+        backgroundColor: Color.fromARGB(255, 249, 248, 248),
         centerTitle: true,
         elevation: 0,
-        title: const Text(
-          "Login",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
+        // title: const Text(
+        //   "Login",
+        //   style: TextStyle(
+        //     fontWeight: FontWeight.bold,
+        //     fontSize: 22,
+        //   ),
+        // ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             const SizedBox(
-              height: 25,
+              height: 120,
+            ),
+            Text(
+              "Sign In",
+              style: TextStyle(
+                fontSize: 25,
+                color: Color.fromARGB(255, 0, 106, 255),
+                fontWeight: FontWeight.bold,
+              ),
             ),
             TextField(
               decoration: const InputDecoration(
+                labelText: "Email",
                 hintText: 'Email',
               ),
               onChanged: (value) {
@@ -74,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextField(
               decoration: const InputDecoration(
+                labelText: "Password",
                 hintText: 'Password',
               ),
               onChanged: (value) {
@@ -82,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: true, //make hide input password key
             ),
             const SizedBox(
-              height: 40,
+              height: 50,
             ),
             Button(
               btnText: 'Login',
@@ -91,23 +101,23 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 30,
             ),
-            // GestureDetector(
-            //   //make a move to login page
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (BuildContext context) => const RegisterScreen(),
-            //       ),
-            //     );
-            //   },
-            //   child: const Text(
-            //     "Don't have any account?",
-            //     style: const TextStyle(
-            //       decoration: TextDecoration.underline,
-            //     ),
-            //   ),
-            // ),
+            GestureDetector(
+              //make a move to login page
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const RegisterScreen(),
+                  ),
+                );
+              },
+              child: const Text(
+                "Don't have any account?",
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
           ],
         ),
       ),
