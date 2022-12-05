@@ -21,10 +21,19 @@ class RegisterScreen extends StatefulWidget {
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
+//name controller
+final TextEditingController _nameController =
+    TextEditingController(text: "test");
+
+//email controller
+final TextEditingController _emailController =
+    TextEditingController(text: "test@gmail.com");
+
 class _RegisterScreenState extends State<RegisterScreen> {
-  String _name = "";
-  String _email = "";
+  String _name = "test";
+  String _email = "test@gmail.com";
   String _password = "";
+  String _device_name = "Android";
 
   createAccountPressed() async {
     bool emailValid = RegExp(
@@ -32,13 +41,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .hasMatch(_email);
     if (emailValid) {
       http.Response response =
-          await AuthServices.register(_name, _email, _password);
+          await AuthServices.register(_name, _email, _password, _device_name);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => const HomeScreen(),
+              builder: (BuildContext context) => const LoginScreen(),
             ));
       } else {
         errorSnackBar(context, responseMap.values.first[0]);
@@ -52,27 +61,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 106, 255),
+        backgroundColor: Color.fromARGB(255, 249, 248, 248),
         centerTitle: true,
         elevation: 0,
         title: const Text(
-          "Registration",
+          "",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
           ),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             const SizedBox(
               height: 25,
             ),
-            TextField(
+            Text(
+              "Sign Up",
+              style: TextStyle(
+                fontSize: 25,
+                color: Color.fromARGB(255, 0, 106, 255),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextFormField(
+              controller: _nameController,
               decoration: const InputDecoration(
                 hintText: 'Full Name',
+                labelText: 'Name',
               ),
               onChanged: (value) {
                 _name = value;
@@ -81,9 +100,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 15,
             ),
-            TextField(
+            TextFormField(
+              controller: _emailController,
               decoration: const InputDecoration(
                 hintText: 'Email',
+                labelText: 'Email',
               ),
               onChanged: (value) {
                 _email = value;
@@ -92,9 +113,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 15,
             ),
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Password',
+                labelText: 'Password',
               ),
               onChanged: (value) {
                 _password = value;
@@ -102,18 +124,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               obscureText: true,
             ),
             const SizedBox(
-              height: 15,
+              height: 50,
             ),
-            TextField(
-              decoration: const InputDecoration(
-                hintText: 'Confirm Password',
-              ),
-              onChanged: (value) {},
-              obscureText: true, //make hide password key
-            ),
-            const SizedBox(
-              height: 40,
-            ),
+            // TextField(
+            //   decoration: const InputDecoration(
+            //     hintText: 'Confirm Password',
+            //   ),
+            //   onChanged: (value) {},
+            //   obscureText: true, //make hide password key
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
             Button(
               btnText: 'Create',
               onBtnPressed: () => createAccountPressed(),

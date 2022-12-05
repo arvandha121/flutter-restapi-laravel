@@ -16,10 +16,18 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
+//email controller
+final TextEditingController _emailController =
+    TextEditingController(text: "superadmin@gmail.com");
+
+//password controller
+final TextEditingController _passwordController =
+    TextEditingController(text: "password");
+
 class _LoginScreenState extends State<LoginScreen> {
   @override
-  String _email = "";
-  String _password = "";
+  String _email = "superadmin@gmail.com";
+  String _password = "password";
 
   loginPressed() async {
     if (_email.isNotEmpty && _password.isNotEmpty) {
@@ -69,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            TextField(
+            TextFormField(
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: "Email",
                 hintText: 'Email',
@@ -81,7 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 15,
             ),
-            TextField(
+            TextFormField(
+              controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: "Password",
                 hintText: 'Password',

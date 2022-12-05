@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart';
 
 class AuthServices {
@@ -7,12 +8,13 @@ class AuthServices {
     String name,
     String email,
     String password,
+    String device_name,
   ) async {
     Map data = {
-      "name": "",
+      "name": name,
       "email": email,
       "password": password,
-      "device_name": "handphone",
+      "device_name": "android",
     };
 
     var body = json.encode(data);
@@ -44,6 +46,27 @@ class AuthServices {
       body: body,
     );
     print(response.body);
+    return response;
+  }
+
+  static Future<http.Response> logout() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+
+    String? token = sp.getString("token");
+
+    var url = Uri.parse(baseUrl + 'auth/logout');
+
+    final header = {
+      'Authorization': 'Bearer $token',
+    };
+
+    http.Response response = await http.post(
+      url,
+      headers: header,
+    );
+
+    sp.remove("token");
+
     return response;
   }
 }
