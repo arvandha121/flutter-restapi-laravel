@@ -66,13 +66,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void sweatAlert(BuildContext context) {
     Alert(
       context: context,
-      type: AlertType.success,
-      title: "Login berhasil",
-      desc: "Selamat anda berhasil login",
+      type: AlertType.warning,
+      title: "Alert!",
+      desc: "Ingin Melanjutkan Login?",
       buttons: [
         DialogButton(
           child: Text(
-            "Selanjutnya",
+            "Iya",
             style: TextStyle(color: Colors.white, fontSize: 14),
           ),
           onPressed: () => loginPressed(),
@@ -86,16 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 249, 248, 248),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white24,
         centerTitle: true,
         elevation: 0,
-        // title: const Text(
-        //   "Login",
-        //   style: TextStyle(
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 22,
-        //   ),
-        // ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../components/category.dart';
 import 'globals.dart';
 
 class AuthServices {
@@ -76,10 +77,49 @@ class AuthServices {
     return response;
   }
 
+  Future<http.Response> requestAddCategory(String name) async {
+    var url = Uri.parse(baseUrl + 'categories');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final response = await http.post(
+      url,
+      headers: {
+        "Accept": "application/json",
+        "Access-Control_Allow_Origin": "*",
+        "Authorization": "Bearer $token",
+      },
+      body: {
+        "name": name,
+      },
+    );
+    return response;
+  }
+
   static _save(String key, String data) async {
     final prefs = await SharedPreferences.getInstance();
-    //const key = 'token';
-    //final value = token;
     prefs.setString(key, data);
+  }
+
+  _read() async {
+    final prefs = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = prefs.get(key) ?? 0;
+    print('read : $value');
+  }
+
+  getCategory() async {
+    final url = Uri.parse(baseUrl + 'categories');
+    final prefs = await SharedPreferences.getInstance();
+    const key = 'token';
+    final token = prefs.getString(key);
+    final headers = {
+      'Authorization': 'Bearer ' + '$token',
+      'Accept': 'application/json',
+    };
+    final response = await http.get(url, headers: headers);
+    print('kategori');
+    print(response.body);
+    return response;
   }
 }
