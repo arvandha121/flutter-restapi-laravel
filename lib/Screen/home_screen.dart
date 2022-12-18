@@ -85,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                   ),
                 ),
+                backgroundColor: Colors.red,
               ),
             );
           },
@@ -176,6 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: Colors.white,
                                       ),
                                     ),
+                                    backgroundColor: Colors.blue,
                                   ),
                                 );
                               },
@@ -249,6 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
+                                      backgroundColor: Colors.red,
                                     ),
                                   );
                                 }

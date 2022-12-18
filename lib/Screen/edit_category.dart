@@ -102,8 +102,10 @@ class _editState extends State<edit> {
                           'Edit success',
                           style: TextStyle(
                             color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+                        backgroundColor: Colors.orange,
                       ),
                     );
                   },
