@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_api_login/Screen/auth/login_screen.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Services/auth_services.dart';
 import 'package:http/http.dart' as http;
@@ -62,6 +63,37 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  sweatAlert() async {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Alert!",
+      desc: "Ingin Melanjutkan Logout?",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Iya",
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          onPressed: () {
+            logoutPressed();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Logout success',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    ).show();
+    return;
+  }
+
   @override
   void initState() {
     getUser();
@@ -81,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              logoutPressed();
+              sweatAlert();
             },
           )
         ],
@@ -136,6 +168,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: const Text("Add"),
                               onPressed: () {
                                 addCategory();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Add new categories',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                           ),
@@ -199,6 +241,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   final response = await CategoryService()
                                       .deleteCategory(listCategory[index]);
                                   print(response.body);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Delete success',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 }
                               },
                               child: Container(

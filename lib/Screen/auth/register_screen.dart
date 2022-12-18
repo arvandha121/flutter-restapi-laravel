@@ -143,9 +143,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
             //   height: 40,
             // ),
             Button(
-              btnText: 'Create',
-              onBtnPressed: () => createPressed(),
-            ),
+                btnText: 'Create',
+                onBtnPressed: () {
+                  createPressed();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Register success',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
             const SizedBox(
               height: 30,
             ),

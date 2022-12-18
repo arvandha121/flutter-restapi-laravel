@@ -71,12 +71,23 @@ class _LoginScreenState extends State<LoginScreen> {
       desc: "Ingin Melanjutkan Login?",
       buttons: [
         DialogButton(
-          child: Text(
-            "Iya",
-            style: TextStyle(color: Colors.white, fontSize: 14),
-          ),
-          onPressed: () => loginPressed(),
-        )
+            child: Text(
+              "Iya",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+            onPressed: () {
+              loginPressed();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Login success',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              );
+            })
       ],
     ).show();
     return;

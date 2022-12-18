@@ -35,7 +35,9 @@ class _editState extends State<edit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Category'),
+        centerTitle: true,
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
@@ -94,6 +96,16 @@ class _editState extends State<edit> {
                   ),
                   onPressed: () {
                     doEditCategory();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Edit success',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    );
                   },
                   child: const Text(
                     "Edit",
