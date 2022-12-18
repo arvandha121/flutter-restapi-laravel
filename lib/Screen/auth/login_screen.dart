@@ -5,6 +5,8 @@ import 'package:flutter_api_login/Screen/auth/register_screen.dart';
 import 'package:flutter_api_login/Services/globals.dart';
 import '../Add/button.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../Services/auth_services.dart';
 import '../home_screen.dart';
@@ -45,17 +47,39 @@ class _LoginScreenState extends State<LoginScreen> {
           await AuthServices.login(_email, _password, _device_name);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
+        onPressed:
+        () => sweatAlert;
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => const HomeScreen(),
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const HomeScreen(),
+          ),
+        );
       } else {
         errorSnackBar(context, responseMap.values.first);
       }
     } else {
       errorSnackBar(context, 'enter all required fields');
     }
+  }
+
+  void sweatAlert(BuildContext context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Login berhasil",
+      desc: "Selamat anda berhasil login",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Selanjutnya",
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          onPressed: () => loginPressed(),
+        )
+      ],
+    ).show();
+    return;
   }
 
   @override
@@ -117,7 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Button(
               btnText: 'Login',
-              onBtnPressed: () => loginPressed(),
+              onBtnPressed: () => sweatAlert(context),
+              // onBtnPressed: () => loginPressed(),
             ),
             const SizedBox(
               height: 30,

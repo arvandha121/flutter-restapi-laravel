@@ -39,7 +39,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(_email);
-    if (emailValid) {
+    bool passwordValid = RegExp(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$")
+        .hasMatch(_password);
+    if (emailValid && passwordValid) {
       http.Response response =
           await AuthServices.register(_name, _email, _password, _device_name);
       Map responseMap = jsonDecode(response.body);
@@ -124,6 +126,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
               obscureText: true,
             ),
+            Text(
+                'Password minimum 1 Upper case, lowercase, and Numeric Number'),
             const SizedBox(
               height: 50,
             ),
