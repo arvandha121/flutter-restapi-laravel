@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_api_login/Screen/login_screen.dart';
+import 'package:flutter_api_login/Screen/auth/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Services/auth_services.dart';
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: logoutPressed,
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // Background color
+                  backgroundColor: Colors.red, // Background color
                 ),
                 child: Text('Logout'),
               ),
@@ -61,18 +61,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void logoutPressed() async {
-    http.Response response = await AuthServices.logout();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = preferences.get(key);
+    setState(() {
+      preferences.remove('token');
+      preferences.clear();
+    });
 
-    if (response.statusCode != 204) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(
+    final token = '$value';
+    // print(token);
+    http.Response response = await AuthServices.logout(token);
+    print(response.body);
+    // final response = await AuthServices().logout(token);
+
+    Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => const LoginScreen(),
         ),
-        (route) => false,
-      );
-    }
+        (route) => false);
+
+    // http.Response response = await AuthServices.logout();
+
+    // if (response.statusCode != 204) {
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (BuildContext context) => const LoginScreen(),
+    //     ),
+    //     (route) => true,
+    //   );
+    // }
     // else {
     //   // ignore: use_build_context_synchronously
     //   Navigator.push(

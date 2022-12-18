@@ -4,15 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 //button
-import 'Add/button.dart';
+import '../Add/button.dart';
 
 //login
-import 'home_screen.dart';
+import '../home_screen.dart';
 import 'login_screen.dart';
 
 //Services
-import '../Services/auth_services.dart';
-import '../Services/globals.dart';
+import '../../Services/auth_services.dart';
+import '../../Services/globals.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -21,21 +21,21 @@ class RegisterScreen extends StatefulWidget {
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-//name controller
-final TextEditingController _nameController =
-    TextEditingController(text: "test");
+class _RegisterScreenState extends State<RegisterScreen> {
+  //name controller
+  final TextEditingController _nameController =
+      TextEditingController(text: "test");
 
 //email controller
-final TextEditingController _emailController =
-    TextEditingController(text: "test@gmail.com");
+  final TextEditingController _emailController =
+      TextEditingController(text: "test@gmail.com");
 
-class _RegisterScreenState extends State<RegisterScreen> {
   String _name = "test";
   String _email = "test@gmail.com";
   String _password = "";
-  String _device_name = "Android";
+  String _device_name = "android";
 
-  createAccountPressed() async {
+  createPressed() async {
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(_email);
@@ -43,6 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       http.Response response =
           await AuthServices.register(_name, _email, _password, _device_name);
       Map responseMap = jsonDecode(response.body);
+      print(response.body);
       if (response.statusCode == 200) {
         Navigator.push(
             context,
@@ -53,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         errorSnackBar(context, responseMap.values.first[0]);
       }
     } else {
-      errorSnackBar(context, 'email not valid');
+      errorSnackBar(context, 'Enter All Required Fields');
     }
   }
 
@@ -138,13 +139,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             // ),
             Button(
               btnText: 'Create',
-              onBtnPressed: () => createAccountPressed(),
+              onBtnPressed: () => createPressed(),
             ),
             const SizedBox(
               height: 30,
             ),
             GestureDetector(
-              //make a move to login page
+              //make a move to home page
               onTap: () {
                 Navigator.push(
                   context,
