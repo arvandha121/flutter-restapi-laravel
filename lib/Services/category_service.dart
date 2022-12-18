@@ -61,4 +61,6 @@ class CategoryService {
     final response = await post(url, body: body, headers: headers);
     return response;
   }
+
+  editCategory(Category category, String s) {}
 }

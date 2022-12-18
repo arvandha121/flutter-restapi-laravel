@@ -96,19 +96,42 @@ class AuthServices {
     return response;
   }
 
+  Future<http.Response> editCategory(Category category, String name) async {
+    final url = Uri.parse(baseUrl + 'categories/${category.id}');
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    final body = {
+      'name': name,
+    };
+    final headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + '$token',
+    };
+
+    final response = await http.put(url, body: body, headers: headers);
+
+    print(response.body);
+    print(response.statusCode);
+    return response;
+  }
+
   static _save(String key, String data) async {
     final prefs = await SharedPreferences.getInstance();
+    //const key = 'token';
+    //final value = token;
     prefs.setString(key, data);
   }
 
-  _read() async {
+  read() async {
     final prefs = await SharedPreferences.getInstance();
     const key = 'token';
     final value = prefs.get(key) ?? 0;
     print('read : $value');
   }
 
-  getCategory() async {
+  getCategories() async {
     final url = Uri.parse(baseUrl + 'categories');
     final prefs = await SharedPreferences.getInstance();
     const key = 'token';

@@ -5,6 +5,9 @@ import 'package:flutter_api_login/Screen/auth/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Services/auth_services.dart';
 import 'package:http/http.dart' as http;
+import 'Add/button.dart';
+import 'Add/logoutbutton.dart';
+import 'edit_category.dart';
 import '../components/category.dart';
 import '../Services/category_service.dart';
 
@@ -21,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController addCategoryTxt = TextEditingController();
 
   getCategory() async {
-    final response = await AuthServices().getCategory();
+    final response = await AuthServices().getCategories();
     print('respone from kategori');
     print(response);
     var dataResponse = json.decode(response.body);
@@ -114,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -154,6 +157,33 @@ class _HomeScreenState extends State<HomeScreen> {
                               var kategori = listCategory[index];
                               return Dismissible(
                                 key: UniqueKey(),
+                                background: Container(
+                                  color: Color.fromARGB(255, 51, 179, 55),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          Icons.create_rounded,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                onDismissed:
+                                    (DismissDirection direction) async {
+                                  if (direction ==
+                                      DismissDirection.startToEnd) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            edit(category: listCategory[index]),
+                                      ),
+                                    );
+                                  }
+                                },
                                 child: Container(
                                   margin:
                                       const EdgeInsets.fromLTRB(10, 5, 10, 5),
