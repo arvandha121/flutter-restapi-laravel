@@ -89,8 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
           'Dashboard',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 26,
-            color: Color.fromARGB(0, 0, 0, 0),
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
       ),
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 23,
                         ),
                       ),
                     ),
