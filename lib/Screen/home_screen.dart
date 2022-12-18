@@ -152,68 +152,85 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         child: ListView.builder(
-                            itemCount: listCategory.length,
-                            itemBuilder: (context, index) {
-                              var kategori = listCategory[index];
-                              return Dismissible(
-                                key: UniqueKey(),
-                                background: Container(
-                                  color: Color.fromARGB(255, 51, 179, 55),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Row(
-                                      children: const [
-                                        Icon(
-                                          Icons.create_rounded,
-                                          color: Colors.white,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                onDismissed:
-                                    (DismissDirection direction) async {
-                                  if (direction ==
-                                      DismissDirection.startToEnd) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            edit(category: listCategory[index]),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        spreadRadius: 1,
-                                        blurRadius: 9,
-                                        offset: Offset(0, 3),
-                                      ),
+                          itemCount: listCategory.length,
+                          itemBuilder: (context, index) {
+                            var kategori = listCategory[index];
+                            return Dismissible(
+                              key: UniqueKey(),
+                              background: Container(
+                                color: Color.fromARGB(255, 51, 179, 55),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.create_rounded,
+                                        color: Colors.white,
+                                      )
                                     ],
                                   ),
-                                  child: ListTile(
-                                    title: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 18),
-                                      child: Text(
-                                        kategori.name,
-                                        textAlign: TextAlign.start,
-                                      ),
+                                ),
+                              ),
+                              secondaryBackground: Container(
+                                color: Colors.redAccent,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (DismissDirection direction) async {
+                                if (direction == DismissDirection.startToEnd) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          edit(category: listCategory[index]),
+                                    ),
+                                  );
+                                } else {
+                                  final response = await CategoryService()
+                                      .deleteCategory(listCategory[index]);
+                                  print(response.body);
+                                }
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      spreadRadius: 1,
+                                      blurRadius: 9,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: ListTile(
+                                  title: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18),
+                                    child: Text(
+                                      kategori.name,
+                                      textAlign: TextAlign.start,
                                     ),
                                   ),
                                 ),
-                              );
-                            }),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
